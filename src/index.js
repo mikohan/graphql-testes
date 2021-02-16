@@ -11,6 +11,7 @@ const typeDefs = `
       greeting(name: String, familyName: String) : String
       grades(numbers: [Int!]): [Int!]
       me: User!
+      sum(numbers: [Float!]): Float!
     }
 
     type User {
@@ -32,6 +33,9 @@ const resolvers = {
       return null;
     },
     grades: (parent, args, ctx, info) => [...args.numbers],
+    sum: (parent, args, ctx, info) => {
+      return args.numbers.reduce((acc, cur) => acc + cur);
+    },
     me() {
       return {
         id: 'djdjfjd',
