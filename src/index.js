@@ -22,7 +22,16 @@ const typeDefs = `
 // Resolvers
 
 const resolvers = {
-  Query: {},
+  Query: {
+    me() {
+      return {
+        id: 'djdjfjd',
+        name: 'Vladimir',
+        email: 'some@server.com',
+        age: 50,
+      };
+    },
+  },
 };
 
 const server = new GraphQLServer({
