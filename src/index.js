@@ -64,6 +64,7 @@ const typeDefs = `
       name: String!
       email: String!
       age: Int
+      posts: [Post!]
     }
 
     type Post {
@@ -79,7 +80,7 @@ const typeDefs = `
 
 const resolvers = {
   Query: {
-    users(args) {
+    users(parent, args, ctx, info) {
       if (args.query) {
         return users.filter((item) =>
           item.name.toLowerCase().includes(args.query.toLowerCase())
@@ -95,17 +96,23 @@ const resolvers = {
         age: 50,
       };
     },
-    posts(args) {
+    posts(parent, args, ctx, info) {
       if (args.query) {
         return posts.filter((item) =>
           item.title.toLowerCase().includes(args.query.toLowerCase())
         );
       }
+      return posts;
     },
   },
   Post: {
-    author(parent) {
+    author(parent, args, ctx, info) {
       return users.find((user) => user.id === parent.author);
+    },
+  },
+  User: {
+    posts(parent, args, ctx, info) {
+      return posts.filter((item) => item.author === parent.id);
     },
   },
 };
