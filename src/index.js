@@ -8,10 +8,8 @@ import { GraphQLServer } from 'graphql-yoga';
 
 const typeDefs = `
     type Query {
-      greeting(name: String, familyName: String) : String
-      grades(numbers: [Int!]): [Int!]
       me: User!
-      sum(numbers: [Float!]): Float!
+      post: Post!
     }
 
     type User {
@@ -20,28 +18,33 @@ const typeDefs = `
       email: String!
       age: Int
     }
+
+    type Post {
+    id: ID!
+    title: String!
+    body: String!
+    published: Boolean!
+    }
 `;
 
 // Resolvers
 
 const resolvers = {
   Query: {
-    greeting(parent, args, ctx, info) {
-      if (args.name) {
-        return `Hello ${args.name}, and ${args.familyName}`;
-      }
-      return null;
-    },
-    grades: (parent, args, ctx, info) => [...args.numbers],
-    sum: (parent, args, ctx, info) => {
-      return args.numbers.reduce((acc, cur) => acc + cur);
-    },
     me() {
       return {
         id: 'djdjfjd',
         name: 'Vladimir',
         email: 'some@server.com',
         age: 50,
+      };
+    },
+    post() {
+      return {
+        id: 'someid',
+        title: 'My post',
+        body: 'Lorem ipsum dolor sit amet',
+        published: true,
       };
     },
   },
