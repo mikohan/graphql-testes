@@ -1,5 +1,6 @@
 import { GraphQLServer } from 'graphql-yoga';
 import { users, posts, comments } from './data';
+import { uuid } from 'uuidv4';
 
 // type defination
 
@@ -80,6 +81,9 @@ const resolvers = {
   },
   Mutation: {
     createUser(parent, args, ctx, info) {
+      const emailTaken = users.some((item) => {
+        item.email === args.email;
+      });
       console.log(args);
     },
   },
