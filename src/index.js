@@ -15,6 +15,11 @@ const typeDefs = `
       post: Post!
       comments: [Comment!]
     }
+
+    type Mutation {
+      createUseer(name: String!, email: String!, age: Int): User!
+    }
+
     type Comment {
       id: ID!
       author: User!
