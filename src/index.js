@@ -17,7 +17,7 @@ const typeDefs = `
     }
 
     type Mutation {
-      createUseer(name: String!, email: String!, age: Int): User!
+      createUser(name: String!, email: String!, age: Int): User!
     }
 
     type Comment {
@@ -76,6 +76,11 @@ const resolvers = {
     },
     comments(parent, args, ctx, info) {
       return comments;
+    },
+  },
+  Mutation: {
+    createUser(parent, args, ctx, info) {
+      console.log(args);
     },
   },
   Post: {
