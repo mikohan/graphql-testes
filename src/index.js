@@ -8,6 +8,8 @@ import { GraphQLServer } from 'graphql-yoga';
 
 const typeDefs = `
     type Query {
+      greeting(name: String, familyName: String) : String
+      grades(numbers: [Int!]): [Int!]
       me: User!
     }
 
@@ -23,6 +25,13 @@ const typeDefs = `
 
 const resolvers = {
   Query: {
+    greeting(parent, args, ctx, info) {
+      if (args.name) {
+        return `Hello ${args.name}, and ${args.familyName}`;
+      }
+      return null;
+    },
+    grades: (parent, args, ctx, info) => [...args.numbers],
     me() {
       return {
         id: 'djdjfjd',
