@@ -7,35 +7,22 @@ import { GraphQLServer } from 'graphql-yoga';
 //
 
 const typeDefs = `
-type Query {
-  id: ID!
-  name: String!
-  age: Int!
-  employed: Boolean!
-  gpa: Float
-}
+    type Query {
+      me: User!
+    }
+
+    type User {
+      id: ID!
+      name: String!
+      email: String!
+      age: Int
+    }
 `;
 
 // Resolvers
 
 const resolvers = {
-  Query: {
-    id() {
-      return 'abs123';
-    },
-    name() {
-      return 'Vladimir vostrikov';
-    },
-    age() {
-      return 49;
-    },
-    employed() {
-      return true;
-    },
-    gpa() {
-      return 4.99;
-    },
-  },
+  Query: {},
 };
 
 const server = new GraphQLServer({
