@@ -1,49 +1,5 @@
 import { GraphQLServer } from 'graphql-yoga';
-
-const users = [
-  {
-    id: 1,
-    name: 'Vladimir',
-    email: 'angara99@gmail.com',
-    age: 24,
-  },
-  {
-    id: 2,
-    name: 'Nikolay Vladimirovich Vostrikov',
-    email: 'angarass99@gmail.com',
-    age: 20,
-  },
-  {
-    id: 3,
-    name: 'Olesya Vostrikova',
-    email: 'angarass99@gmail.com',
-    age: 22,
-  },
-];
-
-const posts = [
-  {
-    id: 12,
-    title: 'First Post',
-    body: 'Lorem ipsum',
-    published: true,
-    author: 1,
-  },
-  {
-    id: 13,
-    title: 'Second Post',
-    body: 'Some Second Post body',
-    published: true,
-    author: 1,
-  },
-  {
-    id: 14,
-    title: 'Third Post',
-    body: 'Some Third Post body',
-    published: true,
-    author: 2,
-  },
-];
+import { users, posts, comments } from './data';
 
 // type defination
 
@@ -57,6 +13,11 @@ const typeDefs = `
       me: User!
       posts(query: String): [Post!]!
       post: Post!
+      comments: [Comment!]
+    }
+    type Comment {
+      id: ID!
+      text: String!
     }
 
     type User {
@@ -103,6 +64,9 @@ const resolvers = {
         );
       }
       return posts;
+    },
+    comments(parent, args, ctx, info) {
+      return comments;
     },
   },
   Post: {
