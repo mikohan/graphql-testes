@@ -82,9 +82,19 @@ const resolvers = {
   Mutation: {
     createUser(parent, args, ctx, info) {
       const emailTaken = users.some((item) => {
-        item.email === args.email;
+        return item.email === args.email;
       });
-      console.log(args);
+      if (emailTaken) {
+        throw new Error('Email taken choose another one');
+      }
+      const user = {
+        id: uuid(),
+        name: args.name,
+        email: args.email,
+        age: args.age,
+      };
+      users.push(user);
+      return user;
     },
   },
   Post: {
