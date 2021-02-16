@@ -1,0 +1,9 @@
+{
+  "name": "graph-basics",
+  "version": "1.0.0",
+  "description": "Basics testa",
+  "main": "index.js",
+  "repository": "git@github.com:mikohan/graphql-testes.git",
+  "author": "Vladimir",
+  "license": "MIT"
+}
