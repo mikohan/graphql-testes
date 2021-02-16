@@ -17,7 +17,9 @@ const typeDefs = `
     }
     type Comment {
       id: ID!
+      author: User!
       text: String!
+      post: Post!
     }
 
     type User {
@@ -26,9 +28,11 @@ const typeDefs = `
       email: String!
       age: Int
       posts: [Post!]
+      comments: [Comment!]
     }
 
     type Post {
+    comments: [Comment!]!
     id: ID!
     author: User!
     title: String!
@@ -73,10 +77,21 @@ const resolvers = {
     author(parent, args, ctx, info) {
       return users.find((user) => user.id === parent.author);
     },
+    comments(parent, args, ctx, info) {
+      return comments.filter((comment) => comment.post === parent.id);
+    },
+  },
+  Comment: {
+    author(parent, args, ctx, info) {
+      return users.find((user) => user.id === parent.author);
+    },
   },
   User: {
     posts(parent, args, ctx, info) {
       return posts.filter((item) => item.author === parent.id);
+    },
+    comments(parent, args, ctx, info) {
+      return comments.filter((comment) => comment.author === parent.id);
     },
   },
 };

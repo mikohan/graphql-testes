@@ -43,10 +43,10 @@ const posts = [
   },
 ];
 const comments = [
-  { id: 'a', text: 'Some first comment' },
-  { id: 'b', text: 'Some second comment' },
-  { id: 'c', text: 'Some third comment' },
-  { id: 'd', text: 'Some forth comment' },
+  { id: 'a', author: 1, text: 'Some first comment', post: 12 },
+  { id: 'b', author: 1, text: 'Some second comment', post: 12 },
+  { id: 'c', author: 2, text: 'Some third comment', post: 13 },
+  { id: 'd', author: 3, text: 'Some forth comment', post: 14 },
 ];
 
 export { users, posts, comments };
