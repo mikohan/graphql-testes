@@ -115,7 +115,12 @@ const resolvers = {
     },
     createComment(parent, args, ctx, info) {
       const userExists = users.some((user) => user.id === args.author);
-      const postExists = posts.some((post) => post.id === args.post);
+      const postExists = posts.some((post) => {
+        if (post.id === args.post && post.published === true) {
+          return true;
+        }
+        return false;
+      });
       if (!userExists) {
         throw new Error('User does not exists');
       }
@@ -128,8 +133,8 @@ const resolvers = {
         author: args.author,
         post: args.post,
       };
-      posts.push(post);
-      return post;
+      comments.push(comment);
+      return comment;
     },
   },
   Post: {
