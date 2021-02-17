@@ -42,6 +42,7 @@ let posts = [
     author: '2',
   },
 ];
+
 let comments = [
   { id: 'a', author: '1', text: 'Some first comment', post: '10' },
   { id: 'b', author: '1', text: 'Some second comment', post: '10' },

@@ -1,5 +1,4 @@
 import { GraphQLServer } from 'graphql-yoga';
-import { users, posts, comments } from './data';
 import { uuid } from 'uuidv4';
 
 // type defination
@@ -38,6 +37,7 @@ const typeDefs = `
 
     type Mutation {
       createUser(data: CreateUserInput): User!
+      deleteUser(id: ID!): User!
       createPost(data: CreatePostInput): Post!
       createComment(data: CreateCommentInput): Comment!
     }
@@ -68,6 +68,56 @@ const typeDefs = `
     }
 `;
 
+let posts = [
+  {
+    id: '10',
+    title: 'First Post',
+    body: 'Lorem ipsum',
+    published: true,
+    author: '1',
+  },
+  {
+    id: '11',
+    title: 'Second Post',
+    body: 'Some Second Post body',
+    published: true,
+    author: '1',
+  },
+  {
+    id: '12',
+    title: 'Third Post',
+    body: 'Some Third Post body',
+    published: true,
+    author: '2',
+  },
+];
+
+let comments = [
+  { id: 'a', author: '1', text: 'Some first comment', post: '10' },
+  { id: 'b', author: '1', text: 'Some second comment', post: '10' },
+  { id: 'c', author: '2', text: 'Some third comment', post: '11' },
+  { id: 'd', author: '3', text: 'Some forth comment', post: '12' },
+];
+let users = [
+  {
+    id: '1',
+    name: 'Vladimir',
+    email: 'angara99@gmail.com',
+    age: 24,
+  },
+  {
+    id: '2',
+    name: 'Nikolay Vladimirovich Vostrikov',
+    email: 'angarass99@gmail.com',
+    age: 20,
+  },
+  {
+    id: 3,
+    name: 'Olesya Vostrikova',
+    email: 'angarass99@gmail.com',
+    age: 22,
+  },
+];
 // Resolvers
 
 const resolvers = {
@@ -115,6 +165,29 @@ const resolvers = {
       users.push(user);
       return user;
     },
+
+    deleteUser(parent, args, ctx, info) {
+      const userIndex = users.findIndex((user) => user.id === args.id);
+
+      if (userIndex === -1) {
+        throw new Error('User does not exists');
+      }
+
+      const deletedUsers = users.splice(userIndex, 1);
+
+      posts = posts.filter((post) => {
+        const match = post.author === args.id;
+
+        if (match) {
+          comments = comments.filter((comment) => comment.post !== post.id);
+        }
+        return !match;
+      });
+      comments = comments.filter((comment) => comment.author !== args.id);
+
+      return deletedUsers[0];
+    },
+
     createPost(parent, args, ctx, info) {
       const userExists = users.some((user) => user.id === args.data.author);
       if (!userExists) {
