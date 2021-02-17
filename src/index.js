@@ -91,6 +91,7 @@ const typeDefs = `
       createPost(data: CreatePostInput): Post!
       deletePost(id: ID): Post!
       createComment(data: CreateCommentInput): Comment!
+      deleteComment(id: ID!): Comment!
     }
 
     type Comment {
@@ -231,6 +232,9 @@ const resolvers = {
       };
       comments.push(comment);
       return comment;
+    },
+    deleteComment(parent, args, ctx, info) {
+      comments = comments.filter((comment) => comment.id !== args.id);
     },
   },
   Post: {
