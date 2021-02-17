@@ -1,12 +1,12 @@
 const users = [
   {
-    id: 1,
+    id: '1',
     name: 'Vladimir',
     email: 'angara99@gmail.com',
     age: 24,
   },
   {
-    id: 2,
+    id: '2',
     name: 'Nikolay Vladimirovich Vostrikov',
     email: 'angarass99@gmail.com',
     age: 20,
@@ -21,21 +21,21 @@ const users = [
 
 const posts = [
   {
-    id: 12,
+    id: '10',
     title: 'First Post',
     body: 'Lorem ipsum',
     published: true,
     author: 1,
   },
   {
-    id: 13,
+    id: '11',
     title: 'Second Post',
     body: 'Some Second Post body',
     published: true,
     author: 1,
   },
   {
-    id: 14,
+    id: '12',
     title: 'Third Post',
     body: 'Some Third Post body',
     published: true,

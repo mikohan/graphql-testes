@@ -17,9 +17,22 @@ const typeDefs = `
       comments: [Comment!]
     }
 
+    input CreateUserInput {
+      name: String!
+      email: String!
+      age: Int!
+    }
+
+    input CreatePostInput {
+      title: String!
+      body: String!
+      published: Boolean!
+      author: ID!
+    }
+
     type Mutation {
-      createUser(name: String!, email: String!, age: Int): User!
-      createPost(title: String!, body: String!, published: Boolean!, author: ID!): Post!
+      createUser(data: CreateUserInput): User!
+      createPost(data: CreatePostInput): Post!
       createComment(text: String!, author: ID!, post: ID!): Comment!
     }
 
@@ -84,26 +97,26 @@ const resolvers = {
   Mutation: {
     createUser(parent, args, ctx, info) {
       const emailTaken = users.some((item) => {
-        return item.email === args.email;
+        return item.email === args.data.email;
       });
       if (emailTaken) {
         throw new Error('Email taken choose another one');
       }
       const user = {
         id: uuid(),
-        ...args,
+        ...args.data,
       };
       users.push(user);
       return user;
     },
     createPost(parent, args, ctx, info) {
-      const userExists = users.some((user) => user.id === args.author);
+      const userExists = users.some((user) => user.id === args.data.author);
       if (!userExists) {
         throw new Error('User not exists');
       }
       const post = {
         id: uuid(),
-        ...args,
+        ...args.data,
       };
       posts.push(post);
       return post;
