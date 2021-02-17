@@ -1,4 +1,4 @@
-const users = [
+let users = [
   {
     id: '1',
     name: 'Vladimir',
@@ -19,34 +19,34 @@ const users = [
   },
 ];
 
-const posts = [
+let posts = [
   {
     id: '10',
     title: 'First Post',
     body: 'Lorem ipsum',
     published: true,
-    author: 1,
+    author: '1',
   },
   {
     id: '11',
     title: 'Second Post',
     body: 'Some Second Post body',
     published: true,
-    author: 1,
+    author: '1',
   },
   {
     id: '12',
     title: 'Third Post',
     body: 'Some Third Post body',
     published: true,
-    author: 2,
+    author: '2',
   },
 ];
-const comments = [
-  { id: 'a', author: 1, text: 'Some first comment', post: 12 },
-  { id: 'b', author: 1, text: 'Some second comment', post: 12 },
-  { id: 'c', author: 2, text: 'Some third comment', post: 13 },
-  { id: 'd', author: 3, text: 'Some forth comment', post: 14 },
+let comments = [
+  { id: 'a', author: '1', text: 'Some first comment', post: '10' },
+  { id: 'b', author: '1', text: 'Some second comment', post: '10' },
+  { id: 'c', author: '2', text: 'Some third comment', post: '11' },
+  { id: 'd', author: '3', text: 'Some forth comment', post: '12' },
 ];
 
 export { users, posts, comments };
