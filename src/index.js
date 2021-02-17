@@ -234,7 +234,14 @@ const resolvers = {
       return comment;
     },
     deleteComment(parent, args, ctx, info) {
-      comments = comments.filter((comment) => comment.id !== args.id);
+      const commentIndex = comments.findIndex(
+        (comment) => comment.id === args.id
+      );
+      if (commentIndex === -1) {
+        throw new Error('Comment does not exists');
+      }
+      const deletedComment = comments.splice(commentIndex, 1);
+      return deletedComment[0];
     },
   },
   Post: {
