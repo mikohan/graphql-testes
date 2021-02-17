@@ -7,67 +7,6 @@ import { uuid } from 'uuidv4';
 
 //
 
-const typeDefs = `
-    type Query {
-      users(query: String!): [User!]!
-      me: User!
-      posts(query: String): [Post!]!
-      post: Post!
-      comments: [Comment!]
-    }
-
-    input CreateUserInput {
-      name: String!
-      email: String!
-      age: Int!
-    }
-
-    input CreatePostInput {
-      title: String!
-      body: String!
-      published: Boolean!
-      author: ID!
-    }
-
-    input CreateCommentInput {
-      text: String!
-      author: ID!
-      post: ID!
-    }
-
-    type Mutation {
-      createUser(data: CreateUserInput): User!
-      deleteUser(id: ID!): User!
-      createPost(data: CreatePostInput): Post!
-      createComment(data: CreateCommentInput): Comment!
-    }
-
-    type Comment {
-      id: ID!
-      author: User!
-      text: String!
-      post: Post!
-    }
-
-    type User {
-      id: ID!
-      name: String!
-      email: String!
-      age: Int
-      posts: [Post!]
-      comments: [Comment!]
-    }
-
-    type Post {
-    comments: [Comment!]!
-    id: ID!
-    author: User!
-    title: String!
-    body: String!
-    published: Boolean!
-    }
-`;
-
 let posts = [
   {
     id: '10',
@@ -118,6 +57,68 @@ let users = [
     age: 22,
   },
 ];
+const typeDefs = `
+    type Query {
+      users(query: String!): [User!]!
+      me: User!
+      posts(query: String): [Post!]!
+      post: Post!
+      comments: [Comment!]
+    }
+
+    input CreateUserInput {
+      name: String!
+      email: String!
+      age: Int!
+    }
+
+    input CreatePostInput {
+      title: String!
+      body: String!
+      published: Boolean!
+      author: ID!
+    }
+
+    input CreateCommentInput {
+      text: String!
+      author: ID!
+      post: ID!
+    }
+
+    type Mutation {
+      createUser(data: CreateUserInput): User!
+      deleteUser(id: ID!): User!
+      createPost(data: CreatePostInput): Post!
+      deletePost(id: ID): Post!
+      createComment(data: CreateCommentInput): Comment!
+    }
+
+    type Comment {
+      id: ID!
+      author: User!
+      text: String!
+      post: Post!
+    }
+
+    type User {
+      id: ID!
+      name: String!
+      email: String!
+      age: Int
+      posts: [Post!]
+      comments: [Comment!]
+    }
+
+    type Post {
+    comments: [Comment!]!
+    id: ID!
+    author: User!
+    title: String!
+    body: String!
+    published: Boolean!
+    }
+`;
+
 // Resolvers
 
 const resolvers = {
@@ -199,6 +200,16 @@ const resolvers = {
       };
       posts.push(post);
       return post;
+    },
+    deletePost(parent, args, ctx, info) {
+      const postIndex = posts.findIndex((post) => post.id === args.id);
+      if (postIndex === -1) {
+        throw new Error('Post does not exists');
+      }
+      const deletedPost = posts.splice(postIndex, 1);
+
+      comments = comments.filter((comment) => comment.post !== args.id);
+      return deletedPost;
     },
     createComment(parent, args, ctx, info) {
       const userExists = users.some((user) => user.id === args.data.author);
