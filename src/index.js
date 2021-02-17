@@ -209,7 +209,7 @@ const resolvers = {
       const deletedPost = posts.splice(postIndex, 1);
 
       comments = comments.filter((comment) => comment.post !== args.id);
-      return deletedPost;
+      return deletedPost[0];
     },
     createComment(parent, args, ctx, info) {
       const userExists = users.some((user) => user.id === args.data.author);
