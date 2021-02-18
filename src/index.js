@@ -57,8 +57,6 @@ let users = [
     age: 22,
   },
 ];
-const typeDefs = `
-`;
 
 // Resolvers
 
@@ -212,7 +210,7 @@ const resolvers = {
 };
 
 const server = new GraphQLServer({
-  typeDefs,
+  typeDefs: './src/schema.graphql',
   resolvers,
 });
 
