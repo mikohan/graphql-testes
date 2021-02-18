@@ -35,6 +35,7 @@ const Mutation = {
     if (typeof data.age !== 'undefined') {
       user.age = data.age;
     }
+    return user;
   },
 
   deleteUser(parent, args, { db }, info) {
@@ -71,6 +72,28 @@ const Mutation = {
     db.posts.push(post);
     return post;
   },
+  updatePost(parent, args, { db }, info) {
+    const { id, data } = args;
+    const post = db.posts.find((post) => post.id === id);
+    if (!post) {
+      throw new Error('Post does not exits');
+    }
+
+    if (typeof data.title === 'string') {
+      post.title = data.title;
+    }
+    if (typeof data.body === 'string') {
+      post.body = data.body;
+    }
+    if (typeof data.published !== 'undefined') {
+      post.published = data.published;
+    }
+    if (typeof data.author !== 'undefined') {
+      post.author = data.author;
+    }
+    return post;
+  },
+
   deletePost(parent, args, { db }, info) {
     const postIndex = db.posts.findIndex((post) => post.id === args.id);
     if (postIndex === -1) {
