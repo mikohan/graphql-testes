@@ -107,18 +107,18 @@ const Mutation = {
     if (postIndex === -1) {
       throw new Error('Post does not exists');
     }
-    const deletedPost = db.posts.splice(postIndex, 1);
+    const [post] = db.posts.splice(postIndex, 1);
 
     db.comments = db.comments.filter((comment) => comment.post !== args.id);
-    if (deletePost[0].published) {
+    if (post.published) {
       pubsub.publish('post', {
         post: {
           mutation: 'DELETED',
-          data: deletedPost[0],
+          data: post,
         },
       });
     }
-    return deletedPost[0];
+    return post;
   },
   createComment(parent, args, { db, pubsub }, info) {
     const userExists = db.users.some((user) => user.id === args.data.author);
