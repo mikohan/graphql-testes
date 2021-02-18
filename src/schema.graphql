@@ -52,6 +52,10 @@ type Mutation {
   deleteComment(id: ID!): Comment!
 }
 
+type Subscription {
+  count: Int!
+}
+
 type Comment {
   id: ID!
   author: User!
