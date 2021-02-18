@@ -54,7 +54,7 @@ type Mutation {
 
 type Subscription {
   comment(postId: ID!): Comment!
-  post: Post!
+  post: PostSubscriptionPayload!
 }
 
 type Comment {
@@ -80,4 +80,8 @@ type Post {
   title: String!
   body: String!
   published: Boolean!
+}
+type PostSubscriptionPayload {
+  mutation: String!
+  data: Post!
 }
