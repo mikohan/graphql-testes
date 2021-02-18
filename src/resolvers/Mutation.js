@@ -83,6 +83,9 @@ const Mutation = {
   updatePost(parent, args, { db }, info) {
     const { id, data } = args;
     const post = db.posts.find((post) => post.id === id);
+
+    const originalPost = { ...post };
+
     if (!post) {
       throw new Error('Post does not exits');
     }
@@ -93,11 +96,19 @@ const Mutation = {
     if (typeof data.body === 'string') {
       post.body = data.body;
     }
-    if (typeof data.published !== 'undefined') {
-      post.published = data.published;
-    }
     if (typeof data.author !== 'undefined') {
       post.author = data.author;
+    }
+    if (typeof data.published === 'boolean') {
+      post.published = data.published;
+
+      if (originalPost.published && !post.published) {
+        // deleted
+      } else if (!originalPost.published && post.published) {
+        // create
+      }
+    } else if (post.published) {
+      // updated
     }
     return post;
   },
