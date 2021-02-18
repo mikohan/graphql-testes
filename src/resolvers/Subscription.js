@@ -13,5 +13,10 @@ const Subscription = {
       return pubsub.asyncIterator('count');
     },
   },
+  comment: {
+    subscribe(parent, { postId }, { db }, info) {
+      const post = db.posts.find((post) => post.id === postId);
+    },
+  },
 };
 export default Subscription;
