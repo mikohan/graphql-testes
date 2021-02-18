@@ -80,7 +80,7 @@ const Mutation = {
     }
     return post;
   },
-  updatePost(parent, args, { db }, info) {
+  updatePost(parent, args, { db, pubsub }, info) {
     const { id, data } = args;
     const post = db.posts.find((post) => post.id === id);
 
@@ -104,6 +104,12 @@ const Mutation = {
 
       if (originalPost.published && !post.published) {
         // deleted
+        pubsub.publish('post', {
+          post: {
+            mutation: 'DELETED',
+            data: originalPost,
+          },
+        });
       } else if (!originalPost.published && post.published) {
         // create
       }
