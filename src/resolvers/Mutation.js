@@ -103,7 +103,6 @@ const Mutation = {
       post.published = data.published;
 
       if (originalPost.published && !post.published) {
-        // deleted
         pubsub.publish('post', {
           post: {
             mutation: 'DELETED',
@@ -111,10 +110,20 @@ const Mutation = {
           },
         });
       } else if (!originalPost.published && post.published) {
-        // create
+        pubsub.publish('post', {
+          post: {
+            mutation: 'CREATED',
+            data: post,
+          },
+        });
       }
     } else if (post.published) {
-      // updated
+      pubsub.publish('post', {
+        post: {
+          mutation: 'UPDATED',
+          data: post,
+        },
+      });
     }
     return post;
   },
