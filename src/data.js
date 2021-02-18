@@ -1,4 +1,4 @@
-let users = [
+const users = [
   {
     id: '1',
     name: 'Vladimir',
@@ -19,7 +19,7 @@ let users = [
   },
 ];
 
-let posts = [
+const posts = [
   {
     id: '10',
     title: 'First Post',
@@ -43,11 +43,17 @@ let posts = [
   },
 ];
 
-let comments = [
+const comments = [
   { id: 'a', author: '1', text: 'Some first comment', post: '10' },
   { id: 'b', author: '1', text: 'Some second comment', post: '10' },
   { id: 'c', author: '2', text: 'Some third comment', post: '11' },
   { id: 'd', author: '3', text: 'Some forth comment', post: '12' },
 ];
 
-export { users, posts, comments };
+const db = {
+  users,
+  posts,
+  comments,
+};
+
+export default db;

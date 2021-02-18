@@ -45,7 +45,7 @@ type User {
   id: ID!
   name: String!
   email: String!
-  age: Int
+  age: Float!
   posts: [Post!]
   comments: [Comment!]
 }
