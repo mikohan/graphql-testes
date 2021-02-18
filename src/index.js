@@ -1,5 +1,6 @@
 import { GraphQLServer } from 'graphql-yoga';
 import { uuid } from 'uuidv4';
+import db from './data';
 
 // type defination
 
@@ -161,6 +162,9 @@ const resolvers = {
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
+  context: {
+    db,
+  },
 });
 
 server.start(() => console.log('The server is up'));
