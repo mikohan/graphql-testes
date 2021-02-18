@@ -12,13 +12,13 @@ import db from './data';
 
 const resolvers = {
   Query: {
-    users(parent, args, ctx, info) {
+    users(parent, args, { db }, info) {
       if (args.query) {
-        return users.filter((item) =>
+        return db.users.filter((item) =>
           item.name.toLowerCase().includes(args.query.toLowerCase())
         );
       }
-      return users;
+      return db.users;
     },
     me() {
       return {
@@ -28,21 +28,21 @@ const resolvers = {
         age: 50,
       };
     },
-    posts(parent, args, ctx, info) {
+    posts(parent, args, { db }, info) {
       if (args.query) {
-        return posts.filter((item) =>
+        return db.posts.filter((item) =>
           item.title.toLowerCase().includes(args.query.toLowerCase())
         );
       }
-      return posts;
+      return db.posts;
     },
-    comments(parent, args, ctx, info) {
-      return comments;
+    comments(parent, args, { db }, info) {
+      return db.comments;
     },
   },
   Mutation: {
-    createUser(parent, args, ctx, info) {
-      const emailTaken = users.some((item) => {
+    createUser(parent, args, { db }, info) {
+      const emailTaken = db.users.some((item) => {
         return item.email === args.data.email;
       });
       if (emailTaken) {
@@ -52,7 +52,7 @@ const resolvers = {
         id: uuid(),
         ...args.data,
       };
-      users.push(user);
+      db.users.push(user);
       return user;
     },
 
